@@ -1,4 +1,4 @@
-FROM  nvidia/cuda:12.1.1-cudnn8-devel-ubuntu22.04
+FROM  nvidia/cuda:12.8.1-cudnn-devel-ubuntu24.04
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -11,8 +11,8 @@ RUN apt-get update \
 RUN pip3 install --no-cache-dir --upgrade pip
 
 RUN pip3 install --no-cache-dir \
-    torch torchaudio torchvision \
-    --extra-index-url https://download.pytorch.org/whl/cu121
+    torch~=2.8.0 torchaudio~=2.8.0 \
+    --extra-index-url https://download.pytorch.org/whl/cu128
 
 RUN pip3 install --no-cache-dir whisperx==3.8.1 && \
     rm -rf /root/.cache/ && \
