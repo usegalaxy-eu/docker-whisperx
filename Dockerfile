@@ -14,7 +14,7 @@ RUN pip3 install --no-cache-dir \
     torch torchaudio torchvision \
     --extra-index-url https://download.pytorch.org/whl/cu121
 
-RUN pip3 install --no-cache-dir whisperx==3.4.2 && \
+RUN pip3 install --no-cache-dir whisperx==3.8.1 && \
     rm -rf /root/.cache/ && \
     rm -rf /tmp/* && \
     rm -rf /var/tmp/*
