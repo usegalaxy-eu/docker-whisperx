@@ -13,12 +13,19 @@ RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         ffmpeg \
         libsndfile1 \
+        libpython3.12 \
         python3 \
     && rm -rf /var/lib/apt/lists/* \
     && uv pip install --system --break-system-packages --no-cache \
         torch~=2.8.0 torchaudio~=2.8.0 \
         --extra-index-url https://download.pytorch.org/whl/cu128 \
-    && uv pip install --system --break-system-packages --no-cache whisperx==3.8.1 \
+    && uv pip install --system --break-system-packages --no-cache \
+        whisperx==3.8.1 \
+        torchcodec==0.7.* \
+    && python3 -c "import importlib.metadata as m, torch, torchaudio, whisperx; assert torch.__version__.startswith('2.8.'), torch.__version__; assert torchaudio.__version__.startswith('2.8.'), torchaudio.__version__; assert m.version('whisperx') == '3.8.1'; assert m.version('torchcodec').startswith('0.7.') " \
+    && python3 -c "from torchcodec._core import ops; ops.load_torchcodec_shared_libraries()" \
+    && whisperx --help >/dev/null \
+    && ffmpeg -hide_banner -version >/dev/null \
     && rm -rf /root/.cache/ /tmp/* /var/tmp/*
 
 ENTRYPOINT [""]
