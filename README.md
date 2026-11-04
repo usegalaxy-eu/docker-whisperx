@@ -8,6 +8,6 @@
 You can start the container outside of Galaxy with:
 
 ```bash
-docker run -i -t --rm -v whisperx:. quay.io/arash77/whisperx:3.4.2 bash
+docker run -it --rm quay.io/galaxy/whisperx:3.8.6 bash
 ```
 
