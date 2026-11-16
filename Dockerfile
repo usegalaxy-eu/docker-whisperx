@@ -9,8 +9,9 @@ ENV UV_SYSTEM_PYTHON=1 \
     UV_NO_CACHE=1 \
     UV_HTTP_TIMEOUT=300
 
-# --exclude-newer: the dependencies resolve as in the 3.8.6 image (its release date), so a
-# rebuild only adds punkt_tab and the models downloaded with 3.8.6 keep matching.
+# --exclude-newer (the 3.8.6 release date): WhisperX's dependencies resolve as in the 3.8.6
+# image. It can't be used on the torch install (uv finds no solution on the PyTorch index),
+# so packages that come with torch from that index (e.g. numpy) are not frozen.
 # NLTK punkt_tab (WhisperX alignment) lives in the image, root-owned in a default NLTK
 # path: NLTK 3.10 only reads data owned by the job user or root that no one else can
 # write to, which a shared model folder or an NFS job directory often isn't.
